@@ -1,0 +1,1000 @@
+﻿ @param double valor 
+     * @return boolean 
+     */  
+    public boolean transferir(Conta contaDestino, String pessoaDestino, double valor){  
+        if (sacar(valor)) {   
+        if (contaDestino.getNome().equals(pessoaDestino));  
+            return contaDestino.depositar(valor);  
+        }  
+        else{  
+            System.out.println("Não há conta aberta para" + " " + pessoaDestino);  
+            return false;  
+        }  
+    }  
+
+
+//transferiu 10 reais  
+        System.out.println(conta1.transferir(conta2, "André", 10));  
+
+
+Não deveria passar uma Conta origem e uma destino... afinal a transferência é entre Contas não entre Pessoas. 
+
+Provavelmente o segundo IF que verifica o nome deve estar dando falso... de uma debugada que vc descobre na primeira. 
+
+[]s
+
+mas na verdade eu queria a seguinte lógica: 
+
+ao chamar o método transferir tem de passar a conta destino (instância), nome da pessao pra quer vai o dinheiro e qual será o valor... então 
+dá verificação, só efetua se a pessoa existir... 
+
+
+Oi gente, sou bem iniciante em Java, pesquisei em apostila, vi exemplo pela net mas até agora não achei nada que se encaixe com a minha necessidade. Bem, comecei a fazer um exercício porém desde ontem tou travada no método transferir e como é pedido no enunciado não sei como codificá-lo, será que vocês podem me ajudar? Aqui segue a questão e o que consegui fazer até então: 
+
+a) Classe ContaCorrente. 
+
+a. Atributos da classe ContaCorrente: 
+
+numeroConta (inteiro) → não pode receber um valor menor ou igual a zero; 
+
+correntista (string) → não pode receber um valor nulo ou string vazia; 
+
+saldo (ponto-flutuante) → não pode manter um valor menor que zero; 
+
+b. Implementar apenas um construtor recebendo valores para os atributos numeroConta e correntista da classe ContaCorrente. 
+
+c. Utilizar a técnica de encapsulamento apresentada no curso e implementar métodos get e set para todos os atributos da classe (ver observação abaixo). 
+
+OBS: Não implementar o método set para o atributo saldo. O valor do atributo saldo só poderá ser alterado através dos métodos deposita, saque e transfere detalhados a seguir. 
+
+d. Implementar o método boolean deposita(double valor) que deposita um valor na conta corrente. O método retorna verdadeiro se o depósito foi realizado com sucesso ou falso em caso contrário. 
+
+OBS: Verificar se o valor informado é maior que zero. 
+
+e. Implementar o método boolean saque(double valor) que realiza um saque na conta corrente. O método retorna verdadeiro se o saque foi realizado com sucesso ou falso e caso contrário. 
+
+OBS: Verificar se o valor informado é maior que zero e se há saldo suficiente para realizar o saque. 
+
+f. Implementar o método boolean transfere(double valor, ContaCorrente c2) que realiza uma transferência de um valor da conta corrente para a conta corrente c2. O método retorna verdadeiro se a transferência foi realizada com sucesso ou falso em caso contrário. 
+
+OBS: Verificar se o valor informado é maior que zero, se o objeto c2 não é nulo e se há saldo suficiente para realizar a transferência. 
+
+b) Implementar uma aplicação chamada AplicacaoContas que instancia dois objetos do tipo ContaCorrente, a partir de dados informados pelo usuário. Em seguida, o programa deve oferecer um menu para o usuário com as seguintes opções: 
+
+a. Imprimir dados de uma conta. Para esta opção o usuário deverá informar o número da conta; 
+
+b. Realizar depósito. Para esta opção o usuário deverá informar o número da conta e o valor para depósito; 
+
+c. Realizar saque. Para esta opção o usuário deverá informar o número da conta e o valor para saque; 
+
+d. Realizar transferência. Para esta opção o usuário deverá informar o número da conta origem, o número da conta destino e o valor para transferência; 
+
+OBS: Para as opções de depósito, saque e transferência, o programa deve imprimir na tela uma mensagem indicando se o depósito, o saque ou a transferência foi realizado com sucesso ou não. 
+
+public class ContaCorrente { 
+int numeroConta; 
+String correntista; 
+double saldo; 
+
+ContaCorrente(int numeroConta, String correntista){ 
+this.numeroConta = numeroConta; 
+this.correntista = correntista; 
+} 
+public void SetNumeroConta (int numeroConta){ 
+this.numeroConta; 
+} 
+int GetNumeroConta(){ 
+return this.numeroConta; 
+} 
+public void SetCorrentista(String correntista){ 
+this.correntista = correntista; 
+} 
+String GetCorrentista(){ 
+return this.correntista; 
+} 
+
+boolean deposita(double valor){ 
+if (valor > 0 ){ 
+this.saldo = this.saldo + valor; 
+return true; 
+}else{ 
+return false; 
+} 
+} 
+boolean saque (double valor){ 
+if (valor>0){ 
+if(this.saldo > valor){ 
+this.saldo = this.saldo - valor; 
+return true; 
+}else{ 
+return false; 
+} 
+}else{ 
+return false; 
+} 
+} 
+boolean transfere (double valor, ContaCorrente c2){ 
+if (valor > 0){ 
+boolean retirou = this.saque(valor); 
+if (retirou == false){ 
+return false; 
+}else{ 
+c2.deposita(valor); 
+return true; 
+} 
+}else{ 
+System.out.println("Valor abaixo de zero"); 
+return false; 
+} 
+} 
+} 
+
+
+
+
+Pelo que eu vi falta apenas verificar se o objeto c2 é diferente de nulo 
+
+
+view plaincopy to clipboardprint?
+
+
+boolean transfere (double valor, ContaCorrente c2){  
+if (valor > 0){  
+boolean retirou = this.saque(valor);  
+if (retirou == false){  
+return false;  
+}else{  
+if(c2!= null){  
+c2.deposita(valor);  
+return true;  
+}  
+else{  
+System.err.println("Valor de Conta Corrente 2 nulo!");  
+return false;  
+}  
+}else{  
+System.out.println("Valor abaixo de zero");  
+return false;  
+}  
+}   
+
+
+Na classe AplicacaoContas você criará duas contas de acordo com o que o usuário informar. 
+No método transferir da classe AplicacaoContas você terá que informar a conta de origem e destino. Então, se você criou uma conta c1 e vai transferir para uma conta c2 ficaria assim: 
+
+
+
+
+Alguma ideia pra fazer uma segunda conta? 
+view plaincopy to clipboardprint?
+ArrayList contas = new ArrayList();  
+ContaCorrente c1 = new ContaCorrente();  
+  
+String numeroConta = JOptionPane.showInputDialog("Numero da conta: ");  
+int numero = Integer.parseInt(numeroConta);  
+String nome = JOptionPane.showInputDialog("Correntista: ");  
+  
+c1.SetNumeroConta(numero);  
+c1.SetCorrentista (nome);  
+  
+contas.add(c1);  
+
+
+
+
+http://www.guj.com.br/java/239741-metodo-transferir
+
+
+----------------------------------------------------------------------------------------
+
+http://www.javaprogressivo.net/2012/10/Aplicativo-Simulacao-simples-de-conta-bancaria-caixa-eletronico-em-Java.html
+
+
+Crie um protótipo de caixa eletrônico na linguagem de programação Java. No início, ele pede seu nome e valor $$ inicial que tem na conta. O programa deve fornecer um número de até 4 dígitos - número da conta - para o usuário (use Random). Esses dados serão usados para criar um objeto da classe "Conta.java"
+
+A seguir, mostra um menu com as opções (esse menu deverá ser um método):
+- Extrato: exibe o nome, número da conta, saldo e quantos saques já foram realizados
+- Sacar: recebe o valor a ser sacado, informa se pode ser sacado (não pode ficar negativo) e mostra o saldo
+- Depositar: recebe o valor a ser depositado e mostra o novo saldo
+- Sair
+
+Esse menu aparece até o usuário escolher sair. As outras opções são métodos que devem fazer parte da "Conta.java" (setters e getters). Note que o usuário pode sacar no máximo 5 vezes por dia.
+
+
+Nesse exercício não vamos usar explicitamente as palavras 'set' e 'get' nos nomes dos métodos. Mas isso não é necessário. O que vamos usar é sua ideia: a ideia por trás do 'set' é a de alterar valores de variáveis, pra isso vamos usar os métodos 'sacar' e 'depositar', que altera o valor do saldo ; a ideia por trás do 'get' é de simplesmente obter informações das variáveis, como é o caso do método 'extrato'.
+
+Use a main só para iniciar o aplicativo
+Inicialmente, no nosso arquivo "Caixa.java", que contém a 'main', criamos uma conta, pedindo um nome e um valor inicial.
+Através do comando: 1 + numero.nextInt(9999) nós sorteamos um número de conta de até 4 dígitos (nextInt(9999) gera números de 0 até 9998, somando 1 gera de 1 até 9999).
+Com esses dados, criamos uma conta, que na verdade é o objeto 'minhaConta' da classe "Conta.java".
+Iniciamos nosso banco ou caixa eletrônico através do método 'iniciar()'.
+
+Note que tentamos enxugar a 'main', pois é uma boa prática. No geral, ela é usada apenas como 'gatilho', pra começar o programa e não pra ser enchida de variáveis e linhas de código.
+Vamos pra classe "Conta.java".
+
+
+Sistema bancário simples em Java
+Nossos atributos (variáveis) são: nome, saldo, conta e saques.
+Aqui vamos usar a real função do construtor: inicializar as variáveis. Nesse caso é obrigatório, pois não tem como, em um sistema bancário, criar uma conta sem ter - no mínimo - esses dados.
+
+Vamos ver agora os principais métodos desse sistema bancário:
+extrato()
+Método simples, que exibe todas as informações do usuário.
+
+sacar(int valor)
+Esse método altera a variável 'saldo'. No caso, ele reduz ela.
+Porém, só faz sentido reduzir (tirar dinheiro), se 'valor' for menor que  o 'saldo', por isso é feito um tratamento através do teste condicional if.
+Caso seja possível realizar o saque, devemos incrementar a variável 'saques', para termos controle do número de saques realizados. Caso não seja possível, exibimos uma mensagem informando o problema e nada ocorre.
+Ou seja, é um belo exemplo de como usar o método set.
+
+depositar(int valor)
+Simplesmente adiciona um valor ao saldo atual.
+
+iniciar()
+Aqui é a tela inicial de nosso Caixa Eletrônico Progressivo Java.
+Ele usa um laço do while que irá rodar o mini-sistema bancário enquanto o usuário não selecionar a opção de sair, que é o número 4 ( while(opcao != 4 ) ).
+A cada iteração é exibido o menu através do método exibeMenu(), é pedido uma entrada (número) ao usuário e esse número é enviado para o método que vai direcionar o programa para a opção escolhida pelo usuário, o escolheOpcao().
+
+exibeMenu()
+Um método simples desse sistema bancário é o 'exibeMenu()', que não recebe nenhum argumento nem retorna nenhuma variável. Como o nome diz, ele simplesmente exibe a lista de opções de nosso sistema.
+
+escolheOpcao(int opcao)
+Vamos realmente escolher a opção que queremos no método 'escolheOpcao', que recebe um número.
+Mas que número é esse?
+Ora, é o referente ao menu. Você vê as opções, entra com o número e esse método serve pra escolher a opção desejada.
+Escolher opção...isso te lembra algo? Sim, o comando switch.
+Caso tenha escolhido a opção 1, eles nos envia para o método 'extrato()'.
+Caso seja a 2, deveria ir para o método 'sacar()', porém não é sempre que podemos sacar. Só podemos se tivermos realizado menos de 3 saques.
+Caso seja possível realizar o saque, tanto o caso 2 com o caso 3 devem receber um valor do usuário, que é o montante que vai ser sacado ou depositado.
+O case 4 é para encerrar o sistema e qualquer outra opção cai na default que acusa como erro.
+
+
+Código fonte Java do Aplicativo
+
+Caixa.java 
+
+import java.util.Scanner;
+import java.util.Random;
+
+public class Caixa {
+    
+    
+    public static void main(String[] args){
+        // Declarando as variáveis, Scanner e Random
+        String nome;
+        double inicial;
+        Scanner entrada = new Scanner(System.in);
+        Random numero = new Random();
+        int conta = 1 + numero.nextInt(9999);
+    
+        //Obtendo os dados iniciais do Cliente
+        System.out.println("Cadastrando novo cliente.");
+        System.out.print("Ente com seu nome: ");
+        nome = entrada.nextLine();
+        
+        System.out.print("Entre com o valor inicial depositado na conta: ");
+        inicial = entrada.nextDouble();
+        
+        //Criando a conta de um cliente
+        Conta minhaConta = new Conta(nome, conta, inicial);
+        minhaConta.iniciar();
+    }
+    
+    
+}
+
+
+Conta.java 
+
+import java.util.Scanner;
+
+public class Conta {
+    private String nome;
+    private int conta, saques;
+    private double saldo;
+    Scanner entrada = new Scanner(System.in);
+    
+    public Conta(String nome, int conta, double saldo_inicial){
+        this.nome=nome;
+        this.conta=conta;
+        saldo=saldo_inicial;
+        saques=0;
+    }
+    
+    public void extrato(){
+        System.out.println("\tEXTRATO");
+        System.out.println("Nome: " + this.nome);
+        System.out.println("Número da conta: " + this.conta);
+        System.out.printf("Saldo atual: %.2f\n",this.saldo);
+        System.out.println("Saques realizados hoje: " + this.saques + "\n");
+        
+    }
+    
+    public void sacar(double valor){
+        if(saldo >= valor){
+            saldo -= valor;
+            saques++;
+            System.out.println("Sacado: " + valor);
+            System.out.println("Novo saldo: " + saldo + "\n");
+        } else {
+            System.out.println("Saldo insuficiente. Faça um depósito\n");
+        }
+    }
+    
+    public void depositar(double valor)
+    {
+        saldo += valor;
+        System.out.println("Depositado: " + valor);
+        System.out.println("Novo saldo: " + saldo + "\n");
+    }
+    
+    public void iniciar(){
+        int opcao;
+
+        do{
+            exibeMenu();
+            opcao = entrada.nextInt();
+            escolheOpcao(opcao);
+        }while(opcao!=4);
+    }
+    
+    public void exibeMenu(){
+        
+        System.out.println("\t Escolha a opção desejada");
+        System.out.println("1 - Consultar Extrato");
+        System.out.println("2 - Sacar");
+        System.out.println("3 - Depositar");
+        System.out.println("4 - Sair\n");
+        System.out.print("Opção: ");
+        
+    }
+    
+    public void escolheOpcao(int opcao){
+        double valor;
+        
+        switch( opcao ){
+            case 1:    
+                    extrato();
+                    break;
+            case 2: 
+                    if(saques<3){
+                        System.out.print("Quanto deseja sacar: ");
+                        valor = entrada.nextDouble();
+                        sacar(valor);
+                    } else{
+                        System.out.println("Limite de saques diários atingidos.\n");
+                    }
+                    break;
+                    
+            case 3:
+                    System.out.print("Quanto deseja depositar: ");
+                    valor = entrada.nextDouble();
+                    depositar(valor);
+                    break;
+                    
+            case 4: 
+                    System.out.println("Sistema encerrado.");
+                    break;
+                    
+            default:
+                    System.out.println("Opção inválida");
+        }
+    }
+}
+
+
+Treinamento Hacker:
+Encontre falhas, brechas e erros no aplicativo acima.
+As respostas estão em cor branca, logo abaixo, bastando selecionar o texto para visualizar.
+Porém, não olhe antes de tentar pensar bastante.
+
+
+
+-------------------------------------------------------------------------------------------
+Pessoal eu fiz um programa de conta de banco, mas só cria uma conta eu queria criar várias contas... 
+No código abaixo eu queria querir inserir no menu a opção de criar conta, e não sei como fazer, eu teria que criar outro objeto??? ou um vetor de objetos?? 
+
+import java.util.Scanner;  
+  
+public class ContaMain {  
+  
+    public static void main(String args[]){  
+        ContaBanco cb;  
+        Scanner entrada = new Scanner(System.in);  
+        int num, op;  
+        double saldo;  
+          
+        System.out.println("Entre com número da conta: ");  
+        num = entrada.nextInt();  
+        System.out.println("Entre com saldo da conta: ");  
+        saldo = entrada.nextDouble();  
+        cb = new ContaBanco(num, saldo);  
+        for(;<img src="http://javafree.uol.com.br/forum/images/smiles/icon_wink.gif">{  
+            op = menu();  
+            switch(op){  
+            case 1:  
+                System.out.println("Entre com o valor para sacar: ");  
+                saldo = entrada.nextDouble();  
+                cb.sacar(saldo);  
+                break;  
+            case 2:  
+                System.out.println("Entre com o valor para depositar: ");  
+                saldo = entrada.nextDouble();  
+                cb.depositar(saldo);  
+                break;  
+            case 3:  
+                System.out.println("Entre com o número da conta para transferir: ");  
+                num = entrada.nextInt();  
+                System.out.println("Entre com o valor para transferir: ");  
+                saldo = entrada.nextDouble();  
+                cb.transferir(num, saldo);  
+                break;  
+            case 4:  
+                saldo = cb.getSaldo();  
+                System.out.println("Seu saldo R$ "+saldo);  
+                break;  
+            case 5:  
+                System.exit(0);  
+            default:  
+                System.out.println("Opção inválida");  
+            }  
+        }  
+              
+    }  
+    private static int menu(){  
+        Scanner entrada = new Scanner(System.in);  
+        int op;  
+          
+        System.out.println("1 - Sacar: ");  
+        System.out.println("2 - Depositar: ");  
+        System.out.println("3 - Transferir: ");  
+        System.out.println("4 - Verificar Saldo: ");  
+        System.out.println("5 - Sair: ");  
+        System.out.println("Escolha a opção: ");  
+        op = entrada.nextInt();  
+        return op;  
+    }  
+}  
+
+public class ContaBanco {  
+    private int num;  
+    private double saldo;  
+      
+    public ContaBanco(int num, double valor){  
+        this.num = num;  
+        saldo = valor;  
+    }  
+    public double getSaldo(){  
+        return saldo;  
+    }  
+    public void sacar(double valor){  
+        if(saldo < valor)  
+            return;  
+        saldo -= valor;  
+    }  
+    public void depositar(double valor){  
+        saldo += valor;  
+    }  
+    public void transferir(int num, double valor){  
+        if(saldo < valor)  
+            return;  
+        if(this.num == num)  
+            return;  
+        saldo -= valor;  
+    }  
+}  
+ 
+
+Relacionados
+ 
+http proxy server java
+http://javafree.uol.com.br/topic-894438-http-proxy-server-java.html
+
+Procurar String em um ArrayList, qual a melhor performance?
+http://javafree.uol.com.br/topic-894435-Procurar-String-em-um-ArrayList-qual-a-melhor-performance.html
+
+Programa para realizar contas
+http://javafree.uol.com.br/topic-894432-Programa-para-realizar-contas.html
+
+ler um int dentro de uma string
+http://javafree.uol.com.br/topic-894428-ler-um-int-dentro-de-uma-string.html
+
+Problema no programa para repetição
+http://javafree.uol.com.br/topic-894425-Problema-no-programa-para-repeticao.html
+
+
+
+http://javafree.uol.com.br/topic-875319-Cria-varias-contas-de-banco.html
+
+
+--------------------------------------------------------------------------------------------
+
+
+mport java.util.*; 
+
+public class ContaCorrente { 
+final static int MAXIMO = 10; 
+Vector extrato = new Vector(MAXIMO); 
+int numero; 
+double saldo; 
+
+public ContaCorrente(Data d, int cc) { 
+this(d,cc,0); 
+}	
+
+public ContaCorrente(Data d, int cc, double inicial) { 
+cc = Math.abs(cc); 
+inicial = Math.abs(inicial); 
+numero = cc; 
+extrato.addElement(new Movimento(d,saldo,inicial)); 
+saldo = inicial; 
+}	
+
+public void deposito(Data d, double deposito) { 
+deposito = Math.abs(deposito); 
+adicionaExtrato(d,saldo,deposito); 
+saldo += deposito; 
+} 
+
+public boolean saque(Data d, double saque) { 
+saque = Math.abs(saque); 
+if (saldo >= saque) { 
+adicionaExtrato(d,saldo,-saque); 
+saldo -= saque; 
+return true; 
+} 
+else return false; 
+} 
+
+public double saldo() { 
+return saldo; 
+} 
+
+public void extrato() { 
+for (int i = 0; i < extrato.size(); i++) 
+System.out.println(extrato.elementAt(i))... 
+System.out.println(); 
+} 
+
+private void adicionaExtrato(Data d, double anterior, double movimento) { 
+if (extrato.size() == MAXIMO) extrato.removeElementAt(0); 
+extrato.addElement(new Movimento(d,anterior,movimento)); 
+} 
+
+} 
+
+
+
+--------------------------------------------------------------------------------------------
+
+
+
+Script simples, com as funções básicas de um banco. Ainda é a versão 1.0, mas possui funções de cadastro de clientes, consulta a saldos, retiradas, depósitos e transferências.
+
+Script:
+
+/*
+  Name: Banco 1.0
+  Copyright: limadaguia
+  Author: Danilo Lima da Guia
+  Date: 22/02/07 18:53
+*/
+
+# include "stdio.h"
+# include "string.h"
+# include "dos.h"
+int n,i;
+struct cliente {
+       char nome[20];
+       char cpf[11];
+       char conta[6];
+       char agencia[6];
+       char senha[6];
+       float saldo;
+       }usuario[20];
+
+
+/*****************************************/
+cadastrarCliente (){
+   int i=1;
+    printf ("\n\t\t===== CADASTRO DE CLIENTES ===== \n");    
+     printf ("\nQuantos clientes deseja cadastrar? ");
+     scanf ("%d", &n);
+
+  for (i=1;i<=n;i++)
+    {
+    puts ("");
+    printf ("\n*-- NOME--* ");
+    scanf ("%s", &usuario.nome);  
+    printf ("\n*--CPF--* ");
+    scanf ("%s", &usuario.cpf);
+    printf ("\n*--AGENCIA--* ");
+    scanf ("%s", &usuario.agencia);
+    printf ("\n*--NUMERO DA CONTA--* ");
+    scanf ("%s", &usuario.conta);
+    printf ("\n*--SENHA--* ");
+    scanf ("%s", &usuario.senha);  
+    usuario.saldo = 0;
+    }  //for  
+    printf ("\n\n*-- operacao realizada com sucesso !!!--*");
+    sleep (2500) ;
+}
+
+/*****************************************************/  
+deposito (){
+    int a,b,c,x;
+    float dep;
+    char agn[6], conta[6], senha[6];
+    
+    printf ("\n\t\t===== DEPOSITO ===== \n");
+    
+    printf ("\n*--DIGITE A SUA AGENCIA--* ");
+    scanf ("%s", &agn);
+    printf ("\n*--NUMERO DA CONTA--* ");
+    scanf ("%s", &conta);
+
+    for (i=1;i<=n;i++)
+    {
+        a = strcmp(agn,usuario.agencia);
+        b = strcmp(conta,usuario.conta);
+        if  ( (a == 0) && (b == 0) )
+        {
+          x=1;
+          printf ("\n CLIENTE : %s", usuario.nome) ;
+          printf ("\n CPF : %s", usuario.cpf) ;
+          printf ("\n\n*--QUANTIDADE DO DEPOSITO--*");
+          scanf ("%f", &dep) ;
+          if (dep >= 0)
+          {
+            usuario.saldo = usuario.saldo + dep;
+          }//if2
+          else
+          {
+          printf ("\n\a *-- erro: O DEPOSITO TEM QUE SER POSITIVO --* ");
+          break;
+          }//else
+        }//if1
+
+     }  //for
+     if(x!=1)
+     printf ("\n\a\a *-- erro: DADOS INCORRETOS ! --*");
+     printf ("\n\n*-- aguarde... --*");
+     sleep (2500) ;
+
+} //fecha deposito
+/**************************************************/        
+consultaSaldo (){
+     char agn[6], conta[6], senha[6];
+     int a,b,c,x;  
+     printf ("\n\t\t===== SALDO =====\n");
+    
+    printf ("\n*--DIGITE A SUA AGENCIA--* ");
+    scanf ("%s", &agn);
+    printf ("\n*--NUMERO DA CONTA--* ");
+    scanf ("%s", &conta);
+    printf ("\n *--DIGITE A SUA SENHA--* ");
+    scanf ("%s", &senha);
+    for (i=1;i<=n;i++)
+    {
+
+        a = strcmp(agn,usuario.agencia);
+        b = strcmp(conta,usuario.conta);
+        c = strcmp(senha,usuario.senha);
+        if  ( (a == 0) && (b == 0)  && (c == 0) )
+        {
+          x=1;
+          printf ("\n CLIENTE : %s", usuario.nome) ;
+          printf ("\n CPF : %s", usuario.cpf) ;
+          printf ("\n\n *--SEU SALDO E : %f reais --*", usuario.saldo) ;        
+        }//if
+       }//for
+    if (x != 1)
+    {
+    printf ("\n\a\a *-- erro: DADOS INCORRETOS ! --*");
+    }
+    printf ("\n\n*-- aguarde... --*");
+    sleep (2500) ;      
+}// fecha consultaSaldo
+/***********************************************/
+transfere (){
+   char agn[6], conta[6], senha[6],agn2[6],conta2[6];
+    int a,b,c,d,e,j,x,l;
+    float val;
+    printf ("\n\t\t ===== TRANSFERENCIA ===== \n");
+
+    printf ("\n*--DIGITE A SUA AGENCIA--* ");
+    scanf ("%s", &agn);
+    printf ("\n*--NUMERO DA CONTA--* ");
+    scanf ("%s", &conta);
+    printf ("\n *--DIGITE A SUA SENHA--*: ");
+    scanf ("%s", &senha);
+    for (i=1;i<=n;i++)
+    {
+
+        a = strcmp(agn,usuario.agencia);
+        b = strcmp(conta,usuario.conta);
+        c = strcmp(senha,usuario.senha);
+        if  (   (a == 0) && (b == 0)  && (c == 0)  )
+        {
+         l=1;
+          printf ("\n CLIENTE : %s", usuario.nome) ;
+          printf ("\n CPF : %s", usuario.cpf) ;
+        }  //if1
+      if (l != 1){
+      printf ("\a\a*-- erro: DADOS INCORRETOS ! --*");
+      printf ("\n\n aguarde...");
+      sleep (1800);
+      system ("cls");
+      main();
+      }
+    }  //for   1
+    printf ("\n*--DIGITE A AGENCIA DO BENEFICIADO--* ");
+    scanf ("%s", &agn2);
+    printf ("\n*--NUMERO DA CONTA DO BENEFICIADO--* ");
+    scanf ("%s", &conta2);
+
+          for (j=1;j<=n;j++)
+          {
+            d = strcmp(agn2,usuario[j].agencia);
+            e = strcmp(conta2,usuario[j].conta);
+               if  ((d == 0) && (e == 0))
+               {
+
+               printf ("\n *--CLIENTE BENEFICIADO--* %s", usuario[j].nome) ;
+
+               printf ("\n*--VALOR DA TRANSFERENCIA--*");
+               scanf ("%f", &val);
+
+                        for (i=1;i<=n;i++)
+                        {
+                            if (usuario.saldo >= val)
+                            {
+                            x=1;
+                            usuario[j].saldo = usuario[j].saldo + val;
+                            usuario.saldo = usuario.saldo - val;                    
+                            }//if 3
+                        
+                            else
+                            {
+                            x=0;
+                            }
+                        }//for3
+
+                       if (x != 0){printf ("\a\a *-- erro: SALDO INSUFICIENTE! --*");}        
+               }//if 2
+
+          }//for2
+  printf ("\n\n*-- aguarde... --*");  
+sleep (2500) ;        
+}
+saque (){
+    int a,b,c,x;
+    float saq;
+    char agn[6], conta[6], senha[6];
+
+    printf ("\n\t\t===== SAQUE ===== \n");
+
+    printf ("\n*--DIGITE A SUA AGENCIA--* ");
+    scanf ("%s", &agn);
+    printf ("\n*--NUMERO DA CONTA--* ");
+    scanf ("%s", &conta);
+
+    for (i=1;i<=n;i++)
+    {
+        a = strcmp(agn,usuario.agencia);
+        b = strcmp(conta,usuario.conta);
+        if  ( (a == 0) && (b == 0) )
+        {
+          printf ("\n CLIENTE : %s", usuario.nome) ;
+          printf ("\n CPF : %s", usuario.cpf) ;
+          printf ("\n\n*--VALOR DA RETIRADA--*");
+          scanf ("%f", &saq) ;
+          if ((saq > 0) && (saq <= usuario.saldo) )
+          {
+            x=1;
+            usuario.saldo = usuario.saldo - saq;
+          }//if2
+        }//if1
+     }  //for
+     if (x != 1){
+           printf ("\n\a\a*-- erro: SALDO INSUFICIENTE ! --*");
+           }
+      printf ("\n\n*-- aguarde... --*");
+      sleep (2500) ;
+}//fecha saque
+
+menu (){
+printf ("Selecione a opcao desejada...\n");
+puts ("");
+puts ("1 - NOVO CLIENTE") ;
+puts ("2 - DEPOSITO") ;
+puts ("3 - CONSULTA SALDO") ;
+puts ("4 - TRANSFERENCIA") ;
+puts ("5 - RETIRADA");    
+puts ("6 - Sair");  
+     }
+main()
+{
+int op;
+
+menu ();
+scanf ("%d", &op);
+switch (op)
+{
+    case 1:
+    system ("cls") ;
+    cadastrarCliente ();
+    system ("cls");
+    main();
+    case 2:
+    system ("cls") ;
+    deposito ();
+    system ("cls");
+    main();
+    case 3:
+    system ("cls") ;
+    consultaSaldo ();
+    system ("cls");
+    main();
+    case 4:
+    system ("cls") ;
+    transfere();
+    system ("cls");
+    main();        
+    case 5:
+    system ("cls") ;
+    saque ();
+    system ("cls");
+    main();
+    case 6:  
+    exit (1);      
+}
+getch();
+}
+
+
+--------------------------------------------------------------------------------------------
+
+Pessoal, 
+A medida q se efetua o saque o programa deverá fazer os testes com a qtde de cedulas de cada tipo, e se nao tiver a qtde disponivel dereva emitir uma mensagem. 
+Fiz a logica e o codigo fonte, mas está dando erro. Poderiam me ajudar com este erro. O erro é:java.lang.NoClassDefFoundError: CaixaEletronico 
+Exception in thread "main" . 
+Outro problema é o metodo verificaCedula, está dando erro. 
+
+abaixo o codigo fonte: 
+
+import javax.swing.*; 
+import java.lang.*; 
+import java.awt.*; 
+
+import java.applet.*; 
+
+public class CaixaEletronico{ 
+
+int cedulas[] = new int [4]; 
+String notas50; 
+String notas20; 
+String notas10; 
+String notas5; 
+int N50; 
+int N20; 
+int N10; 
+int N5; 
+int R50; 
+int R20; 
+int R10; 
+int R5; 
+String cliente; 
+String clienteAnterior; 
+int valor; 
+String saque; 
+
+public static void main (String args[]){ 
+
+} 
+
+public void iniciaCaixa() { 
+
+notas50 = JOptionPane.showInputDialog ("Entre com a qtde de Notas de R$ 50,00: "); 
+notas20 = JOptionPane.showInputDialog ("Entre com a qtde de Notas de R$ 20,00: "); 
+notas10 = JOptionPane.showInputDialog ("Entre com a qtde de Notas de R$ 10,00: "); 
+notas5 = JOptionPane.showInputDialog ("Entre com a qtde de Notas de R$ 5,00: "); 
+cedulas[0] = Integer.parseInt (notas50); 
+cedulas[1] = Integer.parseInt (notas20); 
+cedulas[2] = Integer.parseInt (notas10); 
+cedulas[3] = Integer.parseInt (notas5); 
+} 
+
+public void cliente() { 
+
+cliente = JOptionPane.showInputDialog ("Nome do Cliente: "); 
+clienteAnterior = cliente; 
+
+if (cliente.equalsIgnoreCase(clienteAnterior)) 
+System.out.println("Olá Cliente: "+cliente); 
+
+} 
+
+
+
+
+public int verificaCedula() { 
+
+// falta condição de parada 
+
+
+saque = JOptionPane.showInputDialog ("Digite o valor que deseja sacar: "); 
+valor = Integer.parseInt (saque); 
+
+if ((valor % 5) == 0){ 
+while (valor != 0){	
+N50 = valor % 50; 
+if ((cedulas[0] != 0) && (N50 <= cedulas[0])){ 
+cedulas[0] = cedulas[0] - N50; 
+}else{ 
+N50 = N50 - cedulas[0]; 
+R50 = valor / 50; 
+valor = R50 + (N50 * 50); 
+N20 = valor % 20; 
+} 
+if ((cedulas[1] != 0) && (N20 <= cedulas[1])){ 
+cedulas[20] = cedulas[20] - N20; 
+}else{ 
+N20 = N20 - cedulas[1]; 
+R20 = valor / 20; 
+valor = R20 + (N20*20); 
+N10 = valor % 10; 
+} 
+if ((cedulas[3] != 0) && (N10 <= cedulas[3])){ 
+cedulas[3] = cedulas[3] - N10; 
+}else{ 
+N10 = N10 - cedulas[3]; 
+R10 = valor / 10; 
+valor = R10 + (N10*10); 
+N5 = valor % 5; 
+} 
+if ((cedulas[4] != 0) && (N5 <= cedulas[4])){ 
+cedulas[4] = cedulas[4] - N5; 
+}else{ 
+System.out.println("O saque não pode ser efetuado: "); 
+} 
+} 
+} 
+else{ 
+System.out.println("O saque não pode ser efetuado: "); 
+} 
+
+} 
+
+} 
+
+
+--------------------------------------------------------------------------------------------
+
+https://www.codigofonte.net/scripts/javascript/validacao/1946_mascara-e-validacao-de-inputs-em-geral
+
+--------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
